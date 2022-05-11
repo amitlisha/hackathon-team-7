@@ -3,7 +3,7 @@
 </template>
 <script>
 export default {
-  name: "FeedPost",
+  name: "NewPost",
   data() {},
   methods: {},
   computed: {},
