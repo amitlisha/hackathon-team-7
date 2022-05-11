@@ -1,16 +1,23 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Document } from './Document';
+import { Group } from './Group';
 
-@Entity('patient')
-export class Patient {
+@Entity('post')
+export class Post {
     @PrimaryGeneratedColumn()
     id: number;
 
     @Column()
-    firstName: string;
+    title: string;
 
     @Column()
-    lastName: string;
+    content: string;
 
-    @Column({ type: 'timestamp without time zone' })
-    birthDate: Date;
+    @ManyToMany(() => Document)
+    @JoinTable()
+    documents: Document[]
+
+    @ManyToMany(() => Group)
+    @JoinTable()
+    groups: Group[]
 }

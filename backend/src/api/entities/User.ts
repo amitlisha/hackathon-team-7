@@ -1,17 +1,10 @@
 import {
   Column,
-  Entity,
-  JoinColumn,
-  JoinTable,
-  ManyToMany,
-  ManyToOne,
-  OneToOne,
-  PrimaryColumn,
+  Entity, JoinTable,
+  ManyToMany, PrimaryColumn
 } from 'typeorm';
-import { Attendance } from './Attendance';
+import { Group } from './Group';
 import { Patient } from './Patient';
-import { Role } from './Role';
-import { Unit } from './Unit';
 @Entity('user')
 export class User {
   @PrimaryColumn()
@@ -32,4 +25,8 @@ export class User {
   @ManyToMany(() => Patient)
   @JoinTable()
   patients?: Patient[];
+
+  @ManyToMany(() => Group, (group) => group.users)
+  @JoinTable()
+  groups: Group[];
 }

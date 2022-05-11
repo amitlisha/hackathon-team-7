@@ -1,16 +1,13 @@
-import { getRepository, In } from 'typeorm';
-import { User } from '../entities/User';
 import * as jose from 'jose';
+import { getRepository } from 'typeorm';
 import config from '../../config';
-import { Unit } from '../entities/Unit';
+import { User } from '../entities/User';
 export class UserBL {
   public static async validatePassword(userId: string, password: string) {
     const userRepository = getRepository(User);
 
     try {
-      const userToValidate = await userRepository.findOne(userId, {
-        relations: ['team', 'role', 'team.parent', 'team.parent.parent'],
-      });
+      const userToValidate = await userRepository.findOne(userId);
 
       if (userToValidate.password === password) {
         delete userToValidate.password;
@@ -27,21 +24,5 @@ export class UserBL {
       console.log(e);
       return '';
     }
-  }
-
-  public static async usersFromTeam(teamId: number) {
-    const userRepository = getRepository(User);
-
-    return await userRepository.find({
-      team: {id: teamId}
-    });
-  }
-
-  public static async usersFromTeams(teamIds: number[]) {
-    const userRepository = getRepository(User);
-
-    return await userRepository.find({
-      team: {id: In(teamIds)}
-    });
   }
 }
