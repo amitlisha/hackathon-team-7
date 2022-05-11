@@ -19,12 +19,9 @@ export class User {
   @Column()
   lastName: string;
 
-  @Column()
-  isParent: boolean;
-
-  @ManyToMany(() => Patient)
+  @ManyToMany(() => Patient, (patient) => patient.therapists)
   @JoinTable()
-  patients?: Patient[];
+  patients: Patient[];
 
   @ManyToMany(() => Group, (group) => group.users)
   @JoinTable()

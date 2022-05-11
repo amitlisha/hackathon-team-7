@@ -1,5 +1,4 @@
 import jwt from 'express-jwt';
-import { Unit } from 'src/api/entities/Unit';
 import { User } from '../src/api/entities/User';
 
 declare global {

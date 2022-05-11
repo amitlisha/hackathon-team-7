@@ -1,4 +1,5 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from './User';
 
 @Entity('patient')
 export class Patient {
@@ -13,4 +14,11 @@ export class Patient {
 
     @Column({ type: 'timestamp without time zone' })
     birthDate: Date;
+
+    @ManyToOne((type) => User, (user) => user.id)
+    @JoinColumn({ name: 'parent_id', referencedColumnName: 'id' })
+    parent: User;
+
+    @ManyToMany(() => User, (user) => user.patients)
+    therapists: User[];
 }
