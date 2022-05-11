@@ -1,10 +1,40 @@
 <template>
   <div>
-    <quill-editor
-      ref="myQuillEditor"
-      v-model="content"
-      :options="editorOption"
-    />
+    <v-container class="text-center justify-center">
+      <v-text-field dir="rtl" label="נושא" placeholder="נושא"></v-text-field>
+
+      <quill-editor v-model="content" :options="editorOption"> </quill-editor>
+      <v-row justify="center">
+        <v-col cols="6">
+          <div @dragover.prevent @drop.prevent class="my-3 text-center">
+            <input type="file" multiple @change="uploadFile" />
+            <v-container
+              class="justify-content-center"
+              @drop="dragFile"
+              id="dragDrop"
+            >
+              <v-row justify="center" class="mt-2 mb-2">
+                <h3>או גרור את הקבצים לכאן</h3>
+              </v-row>
+              <v-row v-if="files.length === 0" justify="center" class="mb-2">
+                <v-icon right large color="teal darken-2 mb-2">
+                  mdi-file-document-multiple
+                </v-icon>
+              </v-row>
+
+              <div v-else class="text-center">
+                <ul v-for="(file, index) in files" :key="index">
+                  <li>
+                    <v-icon right small>mdi-file-document-multiple</v-icon
+                    >{{ file.name }}
+                  </li>
+                </ul>
+              </div>
+            </v-container>
+          </div>
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 <script>
@@ -20,11 +50,57 @@ export default {
   data() {
     return {
       content: "",
+      files: [],
+      title: "",
+      editorOption: {
+        modules: {
+          toolbar: {
+            container: [
+              ["bold", "italic", "underline", "strike"], // toggled buttons
+              ["blockquote"],
+
+              [{ header: 1 }, { header: 2 }], // custom button values
+              [{ list: "ordered" }, { list: "bullet" }],
+              [{ script: "sub" }, { script: "super" }], // superscript/subscript
+              [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
+              [{ direction: "rtl" }],
+              [{ align: "right" }][{ size: ["small", false, "large", "huge"] }], // text direction // custom dropdown
+            ],
+          },
+        },
+      },
     };
   },
-  methods: {},
+  methods: {
+    uploadFile(e) {
+      this.files = e.target.files;
+    },
+    dragFile(e) {
+      this.files = e.dataTransfer.files;
+    },
+    uploadPost() {
+      const newPost = {
+        content: this.content,
+        files: this.files,
+        date: new Date(),
+        title: "adad",
+      };
+
+      return newPost;
+    },
+  },
   computed: {},
   mounted() {},
 };
 </script>
-<style lang=""></style>
+<style scoped>
+#dragDrop {
+  margin-top: 10px;
+  padding: 15px;
+  box-shadow: 5px 10px 18px #888888;
+}
+
+ul {
+  list-style-type: none;
+}
+</style>
