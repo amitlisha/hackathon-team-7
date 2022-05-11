@@ -34,19 +34,19 @@
     </v-app-bar>
 
     <v-main>
-      <NewPost />
+      <Post />
     </v-main>
   </v-app>
 </template>
 
 <script>
-import NewPost from "./components/Feed/NewPost.vue";
+import Post from "./components/Feed/Post.vue";
 
 export default {
   name: "App",
 
   components: {
-    NewPost,
+    Post,
   },
 
   data: () => ({
