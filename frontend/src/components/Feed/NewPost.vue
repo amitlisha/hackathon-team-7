@@ -56,12 +56,14 @@
 import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
 import "quill/dist/quill.bubble.css";
+import axios from "axios";
 
 import { quillEditor } from "vue-quill-editor";
 
 export default {
   name: "NewPost",
   components: { "quill-editor": quillEditor },
+
   data() {
     return {
       content: "",
@@ -94,14 +96,16 @@ export default {
       this.files = e.dataTransfer.files;
     },
     uploadPost() {
-      const newPost = {
-        content: this.content,
-        files: this.files,
-        date: new Date(),
-        title: this.title,
-      };
+      const formData = new FormData();
+      formData.append("content", this.content);
+      formData.append("title", this.title);
+      formData.append("patientId", 3);
+      for (let i = 0; i < this.files.length; i++) {
+        formData.append("files", this.files[i]);
+      }
 
-      return newPost;
+      const config = { headers: { "Content-Type": "multipart/form-data" } };
+      axios.post("http://localhost:9000/api/post", formData, config);
     },
   },
   computed: {},
