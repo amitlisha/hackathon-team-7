@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card class="mx-auto my-3" max-width="600px" outlined>
+    <v-card class="mx-auto my-5" max-width="600px" outlined>
       <v-list-item three-line>
         <v-list-item-avatar tile size="50" color="grey">
           <v-img
@@ -21,7 +21,7 @@
                   dense
                   :color="true ? 'yellow lighten-1' : 'grey-lighten-3'"
                 >
-                  mdi-star</v-icon
+                  mdi-bookmark</v-icon
                 ></v-btn
               >
             </v-col>
