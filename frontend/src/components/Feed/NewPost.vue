@@ -1,12 +1,27 @@
 <template>
   <div>
     <v-container class="text-center justify-center">
-      <v-text-field dir="rtl" label="נושא" placeholder="נושא"></v-text-field>
-
-      <quill-editor v-model="content" :options="editorOption"> </quill-editor>
+      <v-row justify="center mt-2">
+        <v-col cols="3">
+          <v-text-field
+            dir="rtl"
+            label="נושא"
+            v-model="title"
+            placeholder="נושא"
+            solo
+          ></v-text-field>
+        </v-col>
+      </v-row>
       <v-row justify="center">
         <v-col cols="6">
-          <div @dragover.prevent @drop.prevent class="my-3 text-center">
+          <quill-editor v-model="content" :options="editorOption">
+          </quill-editor>
+        </v-col>
+      </v-row>
+
+      <v-row justify="center">
+        <v-col cols="6">
+          <div @dragover.prevent @drop.prevent class="my-2 text-center">
             <input type="file" multiple @change="uploadFile" />
             <v-container
               class="justify-content-center"
@@ -83,7 +98,7 @@ export default {
         content: this.content,
         files: this.files,
         date: new Date(),
-        title: "adad",
+        title: this.title,
       };
 
       return newPost;
