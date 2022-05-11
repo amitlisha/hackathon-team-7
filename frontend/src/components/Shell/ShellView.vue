@@ -3,14 +3,17 @@
 
     <app-bar></app-bar>
     <side-bar/>
+    <v-content>
+    <router-view></router-view>
+    </v-content>
     <v-main>
-      <NewPost />
+      <!-- <NewPost /> -->
     </v-main>
 </div>  
 </template>
 
 <script>
-import NewPost from "@/components/Feed/NewPost.vue";
+// import NewPost from "@/components/Feed/NewPost.vue";
 import AppBar from "@/components/Shell/AppBar.vue"
 import SideBar from '@/components/Shell/SideBar.vue';
 
@@ -18,7 +21,7 @@ export default {
   name: "ShellView",
 
   components: {
-    NewPost,
+    // NewPost,
     AppBar,
     SideBar
   },
