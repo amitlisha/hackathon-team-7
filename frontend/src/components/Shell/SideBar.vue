@@ -6,7 +6,6 @@
           <v-list-item-title class="text-h5">
             הילדים שלי
           </v-list-item-title>
-              {{currentChildren}}
         </v-list-item-content>
       </v-list-item>
       <v-divider></v-divider>
@@ -14,12 +13,12 @@
         dense
         nav
       >
+      <v-list-item-group @change="(v)=>updateCurrentChildren(kids[v])" mandatory>
         <v-list-item
           v-for="kid in kids"
           :key="kid.name"
           link
           class="mt-2 mb-4"
-          @click="updateCurrentChildren"
         >
         <v-avatar
         color="primary"
@@ -34,6 +33,7 @@
             <v-list-item-title class="text-h6 name-label">{{ kid.name }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+      </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
     </div>

@@ -7,7 +7,7 @@
           alt="Vuetify Logo"
           class="shrink mr-4"
           contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
+          src="@/assets/logo.png"
           transition="scale-transition"
           width="40"
         />
@@ -21,7 +21,7 @@
           width="100"
         />
       </div>
-
+        
       <v-spacer></v-spacer>
         <v-icon @click="''" large class="me-4">mdi-cog</v-icon>
         <v-icon @click="''" large class="me-2">mdi-logout</v-icon>
