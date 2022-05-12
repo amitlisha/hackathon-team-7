@@ -14,7 +14,7 @@ jobs:
           with:
             node-version: '14.x'
             registry-url: 'https://registry.npmjs.org'
-          - run: cd backend
+          - run: cd ./backend
           - run: docker build -t back .
           - run: docker kill back && docker rm back || true
           - run: docker run -p 9000:9000 -d --name back back
