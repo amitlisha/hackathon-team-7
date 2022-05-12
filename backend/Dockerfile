@@ -7,4 +7,4 @@ COPY . .
 RUN npm run-script build
 EXPOSE 9000
 USER node
-CMD [ "node", "dist/index.js" ]
+CMD [ "node", "dist/src/app.js" ]
