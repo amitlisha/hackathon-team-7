@@ -10,7 +10,7 @@
 
 <script>
 
-import NewPost from "./components/Feed/NewPost.vue";
+// import NewPost from "./components/Feed/NewPost.vue";
 import AppBar from "./components/Shell/AppBar.vue"
 import SideBar from './components/Shell/SideBar.vue';
 import Post from "./components/Feed/Post.vue";
@@ -21,9 +21,9 @@ export default {
 
   components: {
 
-    NewPost,
+//    NewPost,
     AppBar,
-    SideBar
+    SideBar,
     Post,
   },
 
