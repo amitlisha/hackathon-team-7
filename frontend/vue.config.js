@@ -3,4 +3,5 @@ module.exports = defineConfig({
   transpileDependencies: [
     'vuetify'
   ]
+  'resolve.fallback: { "stream": require.resolve("stream-browserify")
 })
