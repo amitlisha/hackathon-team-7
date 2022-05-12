@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import ShellView from '@/components/Shell/ShellView'
 import ManagementView from '@/components/Management/ManagementView'
+import BookmarksPage from '@/components/Shell/BookmarkPage'
 Vue.use(VueRouter)
 
 const routes = [
@@ -12,6 +13,10 @@ const routes = [
       {
         path:'/management',
         component: ManagementView
+      },
+      {
+        path:'/favorites',
+        component: BookmarksPage
       }
     ] },
     { path: '/login', component: ManagementView}

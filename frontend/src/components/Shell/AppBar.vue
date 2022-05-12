@@ -20,7 +20,7 @@
             <div class="text-h5 seondary--text px-3">|</div>
             <router-link class="text-h5 text-decoration-none white--text animated-underline" to="/management">ניהול</router-link>
             <div class="text-h5 seondary--text px-3">|</div>
-            <router-link class="text-h5 text-decoration-none white--text animated-underline" to="/f">תקציר התיק</router-link>
+            <router-link class="text-h5 text-decoration-none white--text animated-underline" to="/favorites">תקציר התיק</router-link>
             </v-row>
 
       <v-spacer></v-spacer>

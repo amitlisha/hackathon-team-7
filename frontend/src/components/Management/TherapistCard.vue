@@ -13,20 +13,20 @@
         size="58"
         class="me-4"
         >
-          <v-img :src="`./assets/kidsPics/kid1.png`">
+          <v-img :src="`./assets/${therapist.img}.png`">
           </v-img>
         </v-avatar>
     </div>
     <div>
     <div class="text-h6">
-        רותם אברהמי
+        {{therapist.name}}
     </div>
     <div>
-        קלינאי תקשורת
+        {{therapist.prof}}
     </div>
     </div>
     <div class="align-self-center ms-4">
-        <v-icon class="trash" button x-large color="red">mdi-trash-can</v-icon>
+        <v-icon class="trash" button x-large color="red" @click="$emit('delete-therapist', tId)">mdi-trash-can</v-icon>
     </div>
     </div>
  </v-card>
@@ -35,7 +35,7 @@
 
 <script>
     export default {
-        
+        props: ['therapist', 'tId']
     }
 </script>
 
