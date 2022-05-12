@@ -15,14 +15,13 @@ jobs:
           node-version: '14.x'
       - uses: actions/checkout@v2
       - working-directory: backend
-        run: ls
-      - run: pwd
-      - run: docker build -t back .
+        run: docker build -t back .
       - run: docker kill back && docker rm back || true
       - run: docker run -p 9000:9000 -d --name back back
       - working-directory: ../frontend
         run: npm install
       - run: npm run build
-      - run: docker build -t front .
+      - working-directory: backend
+        run: docker build -t front .
       - run: docker kill front && docker rm front || true
       - run: docker run -p 8080:8080 -d --name front frontz
