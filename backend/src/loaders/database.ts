@@ -7,7 +7,7 @@ export default async (): Promise<Connection> => {
   try {
     return await createConnection();
   } catch (err) {
-    Logger.debug(err);
+    Logger.error(err);
     throw err;
   }
 };

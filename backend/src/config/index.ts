@@ -54,8 +54,8 @@ const getPubicKey = async () =>
 export default {
   clientHost:
     process.env.NODE_ENV === 'production'
-      ? 'http://bhd1roots.com'
-      : 'http://localhost:3000',
+      ? 'http://34.155.187.141:8080'
+      : 'http://34.155.187.141:8080',
   port: process.env.PORT || 9000,
   databaseURL:
     process.env.NODE_ENV === 'production'
