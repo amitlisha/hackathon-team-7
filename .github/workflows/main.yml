@@ -23,4 +23,4 @@ jobs:
         run: docker build -t front .
       - run: docker kill front || true 
       - run: docker rm front || true
-      - run: docker run -p 8080:8080 -d --name front frontz
+      - run: docker run -p 8080:8080 -d --name front front
