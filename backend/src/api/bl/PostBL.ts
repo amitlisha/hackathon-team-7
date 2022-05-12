@@ -7,15 +7,17 @@ export class PostBL {
   public static async savePost(
     title: string,
     content: string,
-    patientId: number
+    patientId: number,
+    userId: number
   ) {
     const postRepository = getRepository(Post);
-
+    console.log("Hello");
     return await postRepository.save({
       title,
       content,
       date: new Date(),
       patient: { id: patientId },
+      groups: [{ id: userId }],
     });
   }
 
@@ -38,13 +40,19 @@ export class PostBL {
 
     console.log("Hey");
 
-    console.log(
-      await postRepository
-        .createQueryBuilder("post")
-        .select()
-        .leftJoinAndSelect("post.patient", "patient")
-        .getMany()
-    );
+    const data = await postRepository
+      .createQueryBuilder("post")
+      .select()
+      .leftJoinAndSelect("post.patient", "patient")
+      .leftJoinAndSelect("post.groups", "groups")
+      .leftJoinAndSelect("groups.users", "users")
+      .where("patient.id = :patientId", { patientId })
+      .getMany();
+
+    console.log(patientId);
+    console.log(currentUser.id);
+    console.log(data[0]);
+    console.log(data[0].groups[0].users);
 
     const posts = await postRepository
       .createQueryBuilder("post")
@@ -59,5 +67,16 @@ export class PostBL {
     console.log(posts);
 
     return posts;
+  }
+
+  public static async removeGroup(postId: number, groupId: number) {
+    const postRepository = getRepository(Post);
+
+    const post = await postRepository.findOne(postId, {
+      relations: ["groups"],
+    });
+
+    post.groups = post.groups.filter((group) => group.id !== groupId);
+    return await postRepository.save(post);
   }
 }

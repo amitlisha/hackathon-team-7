@@ -13,7 +13,7 @@ export default {
     //
   }),
   mounted() {
-    api.post("/api/auth/login", { userId: 5, password: "678" });
+    api.post("/api/auth/login", { userId: "211381740", password: "678" });
   },
 };
 </script>

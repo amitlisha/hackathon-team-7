@@ -13,7 +13,8 @@ route.post("/", upload.any(), async (req, res) => {
     const post = await PostBL.savePost(
       req.body.title,
       req.body.content,
-      req.body.patientId
+      req.body.patientId,
+      parseInt(req.currentUser.id)
     );
     try {
       DocumentBL.saveDocuments(post.id, req.files);
@@ -31,6 +32,17 @@ route.get("/:patientId", async (req, res) => {
       req.currentUser
     );
     res.json(post);
+  } catch (e) {
+    res.json(500);
+  }
+});
+
+route.delete("/:postId/:groupId", async (req, res) => {
+  try {
+    const post = await PostBL.removeGroup(
+      parseInt(req.params.postId),
+      parseInt(req.params.groupId)
+    );
   } catch (e) {
     res.json(500);
   }

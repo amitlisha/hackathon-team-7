@@ -50,7 +50,9 @@
             </div>
           </v-col>
         </v-row>
-        <v-btn @click="uploadPost"> פרסם את הדיווח</v-btn>
+        <v-row justify="center">
+          <v-btn @click="uploadPost"> פרסם את הדיווח</v-btn>
+        </v-row>
       </v-card>
     </v-container>
   </div>
@@ -63,6 +65,7 @@ import "quill/dist/quill.bubble.css";
 import editorOptions from "./editorOptions";
 import { quillEditor } from "vue-quill-editor";
 import api from "@/api";
+import { mapState } from "vuex";
 
 export default {
   name: "NewPost",
@@ -88,16 +91,19 @@ export default {
       const formData = new FormData();
       formData.append("content", this.content);
       formData.append("title", this.title);
-      formData.append("patientId", 3);
+      formData.append("patientId", this.currentChildren.id);
       for (let i = 0; i < this.files.length; i++) {
         formData.append("files", this.files[i]);
       }
 
       const config = { headers: { "Content-Type": "multipart/form-data" } };
       api.post("/api/post", formData, config);
+      this.$emit("close-dialog");
     },
   },
-  computed: {},
+  computed: {
+    ...mapState(["currentChildren"]),
+  },
   mounted() {},
 };
 </script>

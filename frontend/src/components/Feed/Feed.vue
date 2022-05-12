@@ -13,10 +13,10 @@
       color="white"
       v-model="showDialog"
     >
-      <NewPost></NewPost>
+      <NewPost @close-dialog="closeDialog"></NewPost>
     </v-dialog>
     <div v-if="allPosts.length > 0">
-      <div v-for="post in allPosts" :key="post.id">
+      <div v-for="post in sortedPosts" :key="post.id">
         <Post :post="post"></Post>
       </div>
     </div>
@@ -46,9 +46,17 @@ export default {
       showDialog: false,
     };
   },
-  methods: {},
+  methods: {
+    closeDialog() {
+      this.showDialog = false;
+    },
+  },
   computed: {
     ...mapState(["currentChildren"]),
+    sortedPosts() {
+      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+      return this.allPosts.reverse();
+    },
   },
   async created() {},
   watch: {
@@ -59,6 +67,16 @@ export default {
         ).data;
       },
       deep: true,
+      immediate: true,
+    },
+    showDialog: {
+      async handler(newValue) {
+        if (!newValue) {
+          this.allPosts = await (
+            await api.get(`/api/post/${this.currentChildren.id}`)
+          ).data;
+        }
+      },
     },
   },
 };
