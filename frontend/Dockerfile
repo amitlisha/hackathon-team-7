@@ -18,6 +18,6 @@ FROM nginx:latest
 
 # Copy the build output to replace the default nginx contents.
 COPY --from=build /app/dist /usr/share/nginx/html
-COPY nginx/nginx.conf /etc/nginx/conf.d
+COPY nginx.conf /etc/nginx/conf.d
 
 EXPOSE 8080
