@@ -16,7 +16,8 @@ jobs:
       - uses: actions/checkout@v2
       - working-directory: backend
         run: docker build -t back .
-      - run: docker kill back && docker rm back || true
+      - run: docker kill back || true
+      - run: docker rm back || true
       - run: docker run -p 9000:9000 -d --name back back
       - uses: actions/setup-node@v2
         with:
@@ -28,5 +29,6 @@ jobs:
       - uses: actions/checkout@v2
       - working-directory: backend
         run: docker build -t front .
-      - run: docker kill front && docker rm front || true
+      - run: docker kill front || front 
+      - run: docker rm front || true
       - run: docker run -p 8080:8080 -d --name front frontz
