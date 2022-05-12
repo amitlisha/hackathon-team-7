@@ -1,6 +1,5 @@
 import { getRepository } from "typeorm";
 import { Patient } from "../entities/Patient";
-import { Post } from "../entities/Post";
 import { User } from "../entities/User";
 
 export class PatientBL {
@@ -24,5 +23,14 @@ export class PatientBL {
             .relation(Patient, 'therapists')
             .of({ id: patientId })
             .add({ id: userId })
+    }
+
+    public static async deleteUser(userId: string, patientId: number) {
+        const patientRepository = getRepository(Patient);
+
+        const patient = await patientRepository.findOne(patientId, { relations: ['therapists'] });
+
+        patient.therapists = patient.therapists.filter(user => user.id !== userId)
+        return await patientRepository.save(patient);
     }
 }

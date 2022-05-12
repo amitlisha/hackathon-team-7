@@ -1,8 +1,5 @@
 import { getRepository } from "typeorm";
 import { Group } from "../entities/Group";
-import { Patient } from "../entities/Patient";
-import { Post } from "../entities/Post";
-import { User } from "../entities/User";
 
 export class GroupBL {
     public static async save(name: string, patientId: number, userIds: string[]) {
@@ -16,6 +13,11 @@ export class GroupBL {
         return group;
     }
 
+    public static async delete(groupId: number) {
+        const groupRepository = getRepository(Group);
+        await groupRepository.delete(groupId);
+    }
+
     public static async addUser(userId: number, groupId: number) {
         const groupRepository = getRepository(Group);
 
@@ -23,5 +25,14 @@ export class GroupBL {
             .relation(Group, 'users')
             .of({ id: groupId })
             .add({ id: userId })
+    }
+
+    public static async deleteUser(userId: string, groupId: number) {
+        const groupRepository = getRepository(Group);
+
+        const group = await groupRepository.findOne(groupId, { relations: ['users'] });
+
+        group.users = group.users.filter(user => user.id !== userId)
+        return await groupRepository.save(group);
     }
 }

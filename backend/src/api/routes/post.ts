@@ -29,4 +29,12 @@ route.get('/:patientId', async (req, res) => {
     }
 })
 
+route.delete('/:postId/:groupId', async (req, res) => {
+    try {
+        const post = await PostBL.removeGroup(parseInt(req.params.postId), parseInt(req.params.groupId));
+    } catch (e) {
+        res.json(500)
+    }
+})
+
 export default route;
