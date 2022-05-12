@@ -59,7 +59,7 @@ export default {
   port: process.env.PORT || 9000,
   databaseURL:
     process.env.NODE_ENV === 'production'
-      ? 'psql-roots-postgresql'
+      ? 'host.docker.internal'
       : 'localhost',
   jwtSecret: process.env.JWT_SECRET,
   logs: {
