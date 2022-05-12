@@ -9,43 +9,45 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 route.post("/", upload.any(), async (req, res) => {
-  try {
-    const post = await PostBL.savePost(
-      req.body.title,
-      req.body.content,
-      req.body.patientId,
-      parseInt(req.currentUser.id)
-    );
     try {
-      DocumentBL.saveDocuments(post.id, req.files);
-    } catch (e) {}
-    res.json(post);
-  } catch (e) {
-    res.json(500);
-  }
+        const post = await PostBL.savePost(
+            req.body.title,
+            req.body.content,
+            req.body.patientId,
+            parseInt(req.currentUser.id),
+            req.files
+        );
+        try {
+            DocumentBL.saveDocuments(post.id, req.files);
+        } catch (e) { }
+        res.json(post);
+    } catch (e) {
+        console.log(e)
+        res.json(500);
+    }
 });
 
 route.get("/:patientId", async (req, res) => {
-  try {
-    const post = await PostBL.getAll(
-      parseInt(req.params.patientId),
-      req.currentUser
-    );
-    res.json(post);
-  } catch (e) {
-    res.json(500);
-  }
+    try {
+        const post = await PostBL.getAll(
+            parseInt(req.params.patientId),
+            req.currentUser
+        );
+        res.json(post);
+    } catch (e) {
+        res.json(500);
+    }
 });
 
 route.delete("/:postId/:groupId", async (req, res) => {
-  try {
-    const post = await PostBL.removeGroup(
-      parseInt(req.params.postId),
-      parseInt(req.params.groupId)
-    );
-  } catch (e) {
-    res.json(500);
-  }
+    try {
+        const post = await PostBL.removeGroup(
+            parseInt(req.params.postId),
+            parseInt(req.params.groupId)
+        );
+    } catch (e) {
+        res.json(500);
+    }
 });
 
 export default route;

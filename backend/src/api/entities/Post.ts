@@ -14,6 +14,8 @@ export class Post {
     @Column()
     content: string;
 
+    @Column()
+    textInFiles: string;
 
     @Column({ type: 'timestamp without time zone' })
     date: Date;
