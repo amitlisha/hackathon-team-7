@@ -50,6 +50,7 @@
             </div>
           </v-col>
         </v-row>
+        <v-btn @click="uploadPost"> פרסם את הדיווח</v-btn>
       </v-card>
     </v-container>
   </div>
@@ -58,10 +59,10 @@
 import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
 import "quill/dist/quill.bubble.css";
-import axios from "axios";
 // eslint-disable-next-line no-unused-vars
 import editorOptions from "./editorOptions";
 import { quillEditor } from "vue-quill-editor";
+import api from "@/api";
 
 export default {
   name: "NewPost",
@@ -71,6 +72,7 @@ export default {
     return {
       content: "",
       files: [],
+
       title: "",
       editorOptions,
     };
@@ -92,7 +94,7 @@ export default {
       }
 
       const config = { headers: { "Content-Type": "multipart/form-data" } };
-      axios.post("http://localhost:9000/api/post", formData, config);
+      api.post("/api/post", formData, config);
     },
   },
   computed: {},

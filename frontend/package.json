@@ -5,16 +5,20 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "axios": "^0.27.2",
     "core-js": "^3.8.3",
+    "minio": "^7.0.28",
+    "patch-package": "^6.4.7",
     "pdfvuer": "^1.9.2",
+    "stream-browserify": "^3.0.0",
     "vue": "^2.6.14",
     "vue-pdf": "^4.3.0",
     "vue-quill-editor": "^3.0.6",
-    "vue-router": "^4.0.15",
+    "vue-router": "^3.5.3",
     "vueditor": "^0.3.1",
     "vuetify": "^2.6.0",
     "vuex": "^3.6.2"

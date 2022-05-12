@@ -15,8 +15,10 @@
     >
       <NewPost></NewPost>
     </v-dialog>
-    <div v-for="i in 5" :key="i">
-      <Post></Post>
+    <div v-if="allPosts.length > 0">
+      <div v-for="post in allPosts" :key="post.id">
+        <Post :post="post"></Post>
+      </div>
     </div>
   </div>
 </template>
@@ -24,9 +26,11 @@
 import Post from "./Post.vue";
 import NewPost from "./NewPost.vue";
 import { quillEditor } from "vue-quill-editor";
+import api from "@/api";
 // eslint-disable-next-line no-unused-vars
 import editorOptions from "./editorOptions";
 import "quill/dist/quill.snow.css";
+import { mapState } from "vuex";
 
 export default {
   components: {
@@ -43,8 +47,20 @@ export default {
     };
   },
   methods: {},
-  computed: {},
-  mounted() {},
+  computed: {
+    ...mapState(["currentChildren"]),
+  },
+  async created() {},
+  watch: {
+    currentChildren: {
+      async handler() {
+        this.allPosts = await (
+          await api.get(`/api/post/${this.currentChildren.id}`)
+        ).data;
+      },
+      deep: true,
+    },
+  },
 };
 </script>
 <style scoped>

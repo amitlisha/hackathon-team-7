@@ -11,7 +11,7 @@
           <v-row justify="space-between" class="my-0">
             <v-col cols="10">
               <v-list-item-title class="text-h5 mt-2">
-                מיכל ינאי - קלינאית תקשורת ומטפלת
+                {{ post.title }}
               </v-list-item-title>
             </v-col>
             <v-col cols="2">
@@ -46,14 +46,12 @@
             </v-col>
           </v-row>
 
-          <v-list-item-content class="pt-0 mb-1"
-            >הילד היה בטיפול של שעה, עבדנו בעיקר על חרדת דיבור ועל דרכי
-            התמודדות, הצבנו מטרה שידבר עם שני ילדים חדשים עד סוף השבוע ויעדכן
-            אותי איך היה</v-list-item-content
-          >
+          <v-list-item-content class="pt-0 mb-1">
+            <div v-html="post.content"></div>
+          </v-list-item-content>
         </v-list-item-content>
       </v-list-item>
-      <v-row justify="center">
+      <v-row justify="center" v-if="documents !== undefined">
         <v-btn @click="clickOnPdf()"
           >סיכום פגישה <v-icon class="mr-1">mdi-file-pdf-box</v-icon></v-btn
         >
@@ -72,23 +70,25 @@
 </template>
 <script>
 import pdf from "vue-pdf";
+import api from "@/api";
 
 export default {
   components: {
     pdf,
   },
+  props: ["post"],
   name: "FeedPost",
   data() {
     return {
       currPdfSrc: "",
       showModel: false,
+      documents: undefined,
       currPdfPageNum: 0,
       postPrmissions: [],
     };
   },
   methods: {
     clickOnPdf() {
-      this.currPdfSrc = pdf.createLoadingTask("./assets/Fire.pdf");
       this.currPdfSrc.promise.then((pdf) => {
         this.currPdfPageNum = pdf.numPages;
       });
@@ -96,7 +96,14 @@ export default {
     },
   },
   computed: {},
-  mounted() {},
+  async created() {
+    this.documents = await (
+      await api.get(`/api/document/${this.post.id}`, { responseType: "blob" })
+    ).data;
+    const blob = new Blob([this.documents]);
+    const objectUrl = URL.createObjectURL(blob);
+    this.currPdfSrc = pdf.createLoadingTask(objectUrl);
+  },
 };
 </script>
 <style lang=""></style>

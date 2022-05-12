@@ -1,30 +1,20 @@
 <template>
   <v-app class="app">
-    <app-bar></app-bar>
-    <side-bar />
-    <v-main>
-      <HomeFeed></HomeFeed>
-    </v-main>
+    <router-view></router-view>
   </v-app>
 </template>
 
 <script>
-import HomeFeed from "./components/Feed/Feed.vue";
-import AppBar from "./components/Shell/AppBar.vue";
-import SideBar from "./components/Shell/SideBar.vue";
-
+import api from "@/api";
 export default {
   name: "App",
-
-  components: {
-    HomeFeed,
-    AppBar,
-    SideBar,
-  },
 
   data: () => ({
     //
   }),
+  mounted() {
+    api.post("/api/auth/login", { userId: 5, password: "678" });
+  },
 };
 </script>
 
