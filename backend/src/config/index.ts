@@ -60,7 +60,7 @@ export default {
   databaseURL:
     process.env.NODE_ENV === 'production'
       ? '34.155.187.141'
-      : 'localhost',
+      : '34.155.187.141',
   jwtSecret: process.env.JWT_SECRET,
   logs: {
     level: process.env.LOG_LEVEL,
