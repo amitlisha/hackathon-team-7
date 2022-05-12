@@ -59,7 +59,7 @@ export default {
   port: process.env.PORT || 9000,
   databaseURL:
     process.env.NODE_ENV === 'production'
-      ? 'host.docker.internal'
+      ? '34.155.187.141'
       : 'localhost',
   jwtSecret: process.env.JWT_SECRET,
   logs: {
