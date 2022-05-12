@@ -21,6 +21,7 @@
           </div>
         <therapist-card></therapist-card>
         <therapist-card></therapist-card>
+        <v-icon color="primary lighten-3" x-large class="ms-8">mdi-plus-circle</v-icon>
       </v-row>
     </v-card-text>
     
