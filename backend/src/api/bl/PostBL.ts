@@ -32,4 +32,13 @@ export class PostBL {
 
         return posts;
     }
+
+    public static async removeGroup(postId: number, groupId: number) {
+        const postRepository = getRepository(Post);
+
+        const post = await postRepository.findOne(postId, { relations: ['groups'] });
+
+        post.groups = post.groups.filter(group => group.id !== groupId)
+        return await postRepository.save(post);
+    }
 }
