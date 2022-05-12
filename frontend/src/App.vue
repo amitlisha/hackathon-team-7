@@ -5,12 +5,16 @@
 </template>
 
 <script>
+import api from "@/api";
 export default {
   name: "App",
 
   data: () => ({
     //
   }),
+  mounted() {
+    api.post("/api/auth/login", { userId: "211381740", password: "678" });
+  },
 };
 </script>
 

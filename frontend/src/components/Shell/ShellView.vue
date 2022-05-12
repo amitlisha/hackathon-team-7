@@ -1,26 +1,25 @@
 <template>
- <div>
-
+  <div>
     <app-bar></app-bar>
-    <side-bar/>
+    <side-bar />
     <v-main>
-      <NewPost />
+      <Feed />
     </v-main>
-</div>  
+  </div>
 </template>
 
 <script>
-import NewPost from "@/components/Feed/NewPost.vue";
-import AppBar from "@/components/Shell/AppBar.vue"
-import SideBar from '@/components/Shell/SideBar.vue';
+import Feed from "@/components/Feed/Feed.vue";
+import AppBar from "@/components/Shell/AppBar.vue";
+import SideBar from "@/components/Shell/SideBar.vue";
 
 export default {
   name: "ShellView",
 
   components: {
-    NewPost,
+    Feed,
     AppBar,
-    SideBar
+    SideBar,
   },
 
   data: () => ({
