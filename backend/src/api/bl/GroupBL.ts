@@ -18,12 +18,10 @@ export class GroupBL {
 
     public static async addUser(userId: number, groupId: number) {
         const groupRepository = getRepository(Group);
-        console.log(groupId + ' ' + userId)
 
         groupRepository.createQueryBuilder()
             .relation(Group, 'users')
             .of({ id: groupId })
             .add({ id: userId })
-
     }
 }

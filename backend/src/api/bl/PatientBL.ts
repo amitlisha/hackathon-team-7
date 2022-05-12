@@ -14,8 +14,15 @@ export class PatientBL {
             .where('therapists.id = :userId', { userId: currentUser.id })
             .getMany();
 
-        // const patients = await patientRepository.find({ where: { therapists: { id: currentUser.id } } })
-
         return patients;
+    }
+
+    public static async addUser(userId: number, patientId: number) {
+        const groupRepository = getRepository(Patient);
+
+        groupRepository.createQueryBuilder()
+            .relation(Patient, 'therapists')
+            .of({ id: patientId })
+            .add({ id: userId })
     }
 }
