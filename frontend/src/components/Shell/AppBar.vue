@@ -16,7 +16,7 @@
         
       <v-spacer></v-spacer>
             <v-row class="align-center justify-space-around">
-            <router-link class="text-h5 text-decoration-none white--text animated-underline" to="/">עמוד ראשי</router-link>
+            <router-link class="text-h5 text-decoration-none white--text animated-underline" to="/home">עמוד ראשי</router-link>
             <div class="text-h5 seondary--text px-3">|</div>
             <router-link class="text-h5 text-decoration-none white--text animated-underline" to="/management">ניהול</router-link>
             <div class="text-h5 seondary--text px-3">|</div>
@@ -77,7 +77,7 @@ import { mapActions } from "vuex";
 .animated-underline:hover,
 .button:hover,
 .router-link-active {
-  transform: scale(1.1);
+  transform: scale(1.2);
 }
 
 .is-active::before {

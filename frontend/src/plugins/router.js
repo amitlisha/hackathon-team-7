@@ -7,7 +7,7 @@ Vue.use(VueRouter)
 const routes = [
     { path: '/', component: ShellView, children: [
       {
-        path:'',
+        path:'/home',
       },
       {
         path:'/management',
