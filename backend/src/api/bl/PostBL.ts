@@ -4,41 +4,79 @@ import { Post } from "../entities/Post";
 import { User } from "../entities/User";
 
 export class PostBL {
-    public static async savePost(title: string, content: string, patientId: number) {
-        const postRepository = getRepository(Post);
+  public static async savePost(
+    title: string,
+    content: string,
+    patientId: number,
+    userId: number
+  ) {
+    const postRepository = getRepository(Post);
+    console.log("Hello");
+    return await postRepository.save({
+      title,
+      content,
+      date: new Date(),
+      patient: { id: patientId },
+      groups: [{ id: userId }],
+    });
+  }
 
-        return await postRepository.save({ title, content, date: new Date(), patient: { id: patientId } });
+  public static async getAll(patientId: number, currentUser: User) {
+    const postRepository = getRepository(Post);
+    const patientRepository = getRepository(Patient);
+    console.log(patientId);
+    const patient = await patientRepository.findOne({
+      where: { id: patientId },
+      relations: ["parent"],
+    });
+    console.log(patient);
+
+    if (patient.parent.id === currentUser.id) {
+      const posts = await postRepository.find({
+        where: { patient: patientId },
+      });
+      return posts;
     }
 
-    public static async getAll(patientId: number, currentUser: User) {
-        const postRepository = getRepository(Post);
-        const patientRepository = getRepository(Patient);
+    console.log("Hey");
 
-        const patient = await patientRepository.findOne(patientId);
+    const data = await postRepository
+      .createQueryBuilder("post")
+      .select()
+      .leftJoinAndSelect("post.patient", "patient")
+      .leftJoinAndSelect("post.groups", "groups")
+      .leftJoinAndSelect("groups.users", "users")
+      .where("patient.id = :patientId", { patientId })
+      .getMany();
 
-        if (patient.parent.id === currentUser.id) {
-            const posts = await postRepository.find();
-            return posts;
-        }
+    console.log(patientId);
+    console.log(currentUser.id);
+    console.log(data[0]);
+    console.log(data[0].groups[0].users);
 
-        const posts = await postRepository.createQueryBuilder('post')
-            .select()
-            .leftJoin('post.patient', 'patient')
-            .leftJoin('post.groups', 'groups')
-            .leftJoin('groups.users', 'users')
-            .where('users.id = :userId', { userId: currentUser.id })
-            .where('patient.id = :patientId', { patientId })
-            .getMany()
+    const posts = await postRepository
+      .createQueryBuilder("post")
+      .select()
+      .leftJoin("post.patient", "patient")
+      .leftJoin("post.groups", "groups")
+      .leftJoin("groups.users", "users")
+      .where("users.id = :userId", { userId: currentUser.id })
+      .andWhere("patient.id = :patientId", { patientId })
+      .getMany();
 
-        return posts;
-    }
+    console.log(posts);
 
-    public static async removeGroup(postId: number, groupId: number) {
-        const postRepository = getRepository(Post);
+    return posts;
+  }
 
-        const post = await postRepository.findOne(postId, { relations: ['groups'] });
+  public static async removeGroup(postId: number, groupId: number) {
+    const postRepository = getRepository(Post);
 
-        post.groups = post.groups.filter(group => group.id !== groupId)
-        return await postRepository.save(post);
-    }
+    const post = await postRepository.findOne(postId, {
+      relations: ["groups"],
+    });
+
+    post.groups = post.groups.filter((group) => group.id !== groupId);
+    return await postRepository.save(post);
+  }
 }

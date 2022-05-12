@@ -1,35 +1,20 @@
 <template>
   <v-app class="app">
-    <app-bar></app-bar>
-    <side-bar/>
-    <v-main>
-      <Post />
-    </v-main>
+    <router-view></router-view>
   </v-app>
 </template>
 
 <script>
-
-import NewPost from "./components/Feed/NewPost.vue";
-import AppBar from "./components/Shell/AppBar.vue"
-import SideBar from './components/Shell/SideBar.vue';
-import Post from "./components/Feed/Post.vue";
-
-
+import api from "@/api";
 export default {
   name: "App",
-
-  components: {
-
-    NewPost,
-    AppBar,
-    SideBar
-    Post,
-  },
 
   data: () => ({
     //
   }),
+  mounted() {
+    api.post("/api/auth/login", { userId: "211381740", password: "678" });
+  },
 };
 </script>
 

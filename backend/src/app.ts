@@ -1,18 +1,17 @@
-import server from './server';
-import config from './config';
-import Logger from './logger';
-import { createServer } from 'http';
-import { Server } from 'socket.io';
-import * as Minio from 'minio';
+import server from "./server";
+import config from "./config";
+import Logger from "./logger";
+import { createServer } from "http";
+import { Server } from "socket.io";
+import * as Minio from "minio";
 
 export const minioClient = new Minio.Client({
-  endPoint: '10.41.0.135',
+  endPoint: "minio.shobly.org",
   port: 9000,
   useSSL: false,
-  accessKey: 'U6jugialJ8jfkcpA',
-  secretKey: 'tEmGQoj3jWtR3o8MP4fxZeNkobdEO7Zk'
+  accessKey: "tateRbuFaBG4ZI6o",
+  secretKey: "H0hX9ilaQW2pChyn3IP1xcuvi1llAjz8",
 });
-
 
 const startServer = async () => {
   const app = await server();
